@@ -34,6 +34,10 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	// lombok valid, notblank
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // lombok @Valid, @NotBlank
+
+	// thymeleaf 의존성 추가
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {
