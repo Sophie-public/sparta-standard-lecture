@@ -6,5 +6,9 @@
 </head>
 <body>
 <h1>나의 메모</h1>
+<article th:each="memo : ${memos}">
+    <h2 th:text="${memo.title}">메모 제목</h2>
+    <p th:text="${memo.content}">메모 내용</p>
+</article>
 </body>
 </html>
