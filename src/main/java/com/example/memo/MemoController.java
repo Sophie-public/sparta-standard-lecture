@@ -1,5 +1,7 @@
 package com.example.memo;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -83,5 +85,38 @@ public class MemoController {
         }
     }
 
+    @GetMapping("/search")
+    public List<MemoResponse> search(
+            @RequestParam(name = "keyword") String keyword) {
 
+        return repository.findAll().stream()
+                .filter(memo -> memo.getTitle() != null
+                        && memo.getTitle().contains(keyword))
+                .map(MemoResponse::from)
+                .toList();
+
+
+    }
+
+    @GetMapping("/searchv2")
+    public List<MemoResponse> search(
+            @RequestParam(name = "keyword") String keyword,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+
+        if (page < 0 || size < 1) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "page는 0 이상, size는 1 이상이어야 합니다."
+            );
+        }
+
+        PageRequest pageRequest = PageRequest.of(
+                page, size, Sort.by("id").ascending()
+        );
+
+        return repository.findByTitleContaining(keyword, pageRequest)
+                .stream()
+                .map(MemoResponse::from)
+                .toList();
+    }
 }
