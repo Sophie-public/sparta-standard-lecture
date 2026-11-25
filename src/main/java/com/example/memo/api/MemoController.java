@@ -1,5 +1,9 @@
-package com.example.memo;
+package com.example.memo.api;
 
+import com.example.memo.Memo;
+import com.example.memo.MemoRepository;
+import com.example.memo.MemoRequest;
+import com.example.memo.MemoResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
